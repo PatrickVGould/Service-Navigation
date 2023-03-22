@@ -53,6 +53,7 @@ catchment_area = st.selectbox(
 current_support = st.selectbox(
     "Current Support",
     options = ["Mental Health Service", "GP", "Psychiatrist (Private or Public)", "Psychologist", "Other"],
+)
 
 if st.button("Get Recommendations"):
     recommendations = get_recommendations(age, condition)
