@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import re
 
 # Sample service data
 data = {
@@ -32,9 +33,10 @@ df = pd.DataFrame(data)
 def get_recommendations(age, condition):
     eligible_services = df[df["Eligibility Criteria"].str.contains(condition)]
     eligible_services = eligible_services[
-        eligible_services["Eligibility Criteria"].apply(lambda x: int(x.split(" ")[0]) <= age)
+        eligible_services["Eligibility Criteria"].apply(lambda x: int(re.search(r"\d+", x).group()) <= age)
     ]
     return eligible_services
+
 
 # Streamlit app
 st.title("Mental Health Service Eligibility and Recommendation Program")
