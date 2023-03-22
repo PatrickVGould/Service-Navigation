@@ -118,6 +118,9 @@ data = {
 
 df = pd.DataFrame(data)
 
+fake_urls = [f"http://www.example.com/{name.lower().replace(' ', '-')}" for name in data["Service"]]
+df["URL"] = fake_urls
+
 #Function to get recommendations
 def get_recommendations(age, condition, catchment_area, current_support):
     eligible_services = df[
@@ -174,9 +177,11 @@ if st.button("Get Recommendations"):
             temp = get_recommendations(age, condition, catchment_area, current_support)
             recommendations = recommendations.append(temp)
     recommendations = recommendations.drop_duplicates().reset_index(drop=True)
-    
+
     if not recommendations.empty:
         st.write("Recommended services:")
-        st.write(recommendations)
+        for _, row in recommendations.iterrows():
+            service_name, url = row["Service"], row["URL"]
+            st.markdown(f"[{service_name}]({url})")
     else:
         st.write("No services found for the given criteria.")
