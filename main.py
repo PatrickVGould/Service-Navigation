@@ -32,7 +32,7 @@ df = pd.DataFrame(data)
 def get_recommendations(age, condition):
     eligible_services = df[df["Eligibility Criteria"].str.contains(condition)]
     eligible_services = eligible_services[
-        eligible_services["Eligibility Criteria"].str.contains(f"{age}+ years")
+        eligible_services["Eligibility Criteria"].apply(lambda x: int(x.split(" ")[0]) <= age)
     ]
     return eligible_services
 
