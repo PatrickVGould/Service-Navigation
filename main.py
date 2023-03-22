@@ -120,9 +120,18 @@ df = pd.DataFrame(data)
 
 #Function to get recommendations
 def get_recommendations(age, condition, catchment_area, current_support):
-    eligible_services = df[(df["Eligibility Criteria"].str.contains(condition)) & (df["Catchment Area"] == catchment_area) & (df["Current Support"].str.contains(current_support))]
-    eligible_services = eligible_services[eligible_services["Eligibility Criteria"].apply(lambda x: int(re.search(r"\d+", x).group()) <= age)]
+    eligible_services = df[
+        (df["Eligibility Criteria"].str.contains(condition, case=False)) &
+        (df["Catchment Area"].str.contains(catchment_area, case=False)) &
+        (df["Current Support"].str.contains(current_support, case=False))
+    ]
+    eligible_services = eligible_services[
+        eligible_services["Eligibility Criteria"].apply(
+            lambda x: int(re.search(r"\d+", x).group()) <= age
+        )
+    ]
     return eligible_services
+
 
 #Streamlit app
 st.title("Mental Health Service Eligibility and Recommendation Program")
