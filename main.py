@@ -179,7 +179,14 @@ if st.button("Get Recommendations"):
 
     if not recommendations.empty:
         st.write("Recommended services:")
-        st.dataframe(recommendations.iloc[:, 1:], height=400) # set height parameter
+        for i in range(len(recommendations)):
+            service = recommendations.iloc[i]
+            st.write(f"Service {i+1}: {service['Service']}")
+            st.write(f"Eligibility Criteria: {service['Eligibility Criteria']}")
+            st.write(f"Catchment Area: {service['Catchment Area']}")
+            st.write(f"Current Support Required: {service['Current Support']}")
+            st.write(f"URL: {service['URL']}")
+            st.write("")  # add an empty line for spacing
     else:
         st.write("No services found for the given criteria.")
 
