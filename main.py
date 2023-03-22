@@ -138,21 +138,43 @@ st.title("Mental Health Service Eligibility and Recommendation Program")
 
 st.subheader("Patient Information")
 age = st.number_input("Age", min_value=1, max_value=120, value=25, step=1)
-condition = st.selectbox(
-    "Condition",
-    options=["anxiety", "depression", "schizophenia", "mood disorder", "physical disability", "eating disorders", "substance abuse"],
-)
+
+st.subheader("Condition")
+condition_options = [
+    "anxiety",
+    "depression",
+    "schizophrenia",
+    "mood disorder",
+    "physical disability",
+    "eating disorders",
+    "substance abuse",
+]
+selected_conditions = [option for option in condition_options if st.checkbox(option, key=option)]
+
+st.subheader("Catchment Area")
 catchment_area = st.selectbox(
     "Catchment Area",
     options=["Eastern Suburbs Mental Health", "St George Mental Health", "Sutherland Mental Health"],
 )
-current_support = st.selectbox(
-    "Current Support",
-    options=["Mental Health Service", "GP", "Psychiatrist (Private or Public)", "Psychologist", "Other"],
-)
+
+st.subheader("Current Support")
+current_support_options = [
+    "Mental Health Service",
+    "GP",
+    "Psychiatrist (Private or Public)",
+    "Psychologist",
+    "Other",
+]
+selected_current_support = [option for option in current_support_options if st.checkbox(option, key=option)]
 
 if st.button("Get Recommendations"):
-    recommendations = get_recommendations(age, condition, catchment_area, current_support)
+    recommendations = pd.DataFrame()
+    for condition in selected_conditions:
+        for current_support in selected_current_support:
+            temp = get_recommendations(age, condition, catchment_area, current_support)
+            recommendations = recommendations.append(temp)
+    recommendations = recommendations.drop_duplicates().reset_index(drop=True)
+    
     if not recommendations.empty:
         st.write("Recommended services:")
         st.write(recommendations)
