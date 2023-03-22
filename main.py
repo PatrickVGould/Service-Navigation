@@ -179,6 +179,7 @@ if st.button("Get Recommendations"):
 
     if not recommendations.empty:
         st.write("Recommended services:")
-        st.write(recommendations)
+        st.dataframe(recommendations)
+        # or st.table(recommendations)
     else:
         st.write("No services found for the given criteria.")
