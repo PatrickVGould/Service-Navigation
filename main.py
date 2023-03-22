@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import re
-import matplotlib.pyplot as plt
 
 # Sample service data
 data = {
@@ -188,8 +187,7 @@ if st.button("Get Recommendations"):
             st.write(f"Current Support Required: {service['Current Support']}")
             st.write(f"URL: {service['URL']}")
             st.write("")  # add an empty line for spacing
-            plt.plot()  # add a line between services
-            st.pyplot()  # display the plot
+            st.markdown("""---""")
     else:
         st.write("No services found for the given criteria.")
 
