@@ -120,7 +120,7 @@ df = pd.DataFrame(data)
 
 #Function to get recommendations
 def get_recommendations(age, condition, catchment_area, current_support):
-    eligible_services = df[(df["Eligibility Criteria"].str.contains(condition)) & (df["Catchment Area"] == catchment_area) & (df["Current Support"] == current_support)]
+    eligible_services = df[(df["Eligibility Criteria"].str.contains(condition)) & (df["Catchment Area"] == catchment_area) & (df["Current Support"].str.contains(current_support))]
     eligible_services = eligible_services[eligible_services["Eligibility Criteria"].apply(lambda x: int(re.search(r"\d+", x).group()) <= age)]
     return eligible_services
 
