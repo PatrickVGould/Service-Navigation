@@ -179,8 +179,6 @@ if st.button("Get Recommendations"):
 
     if not recommendations.empty:
         st.write("Recommended services:")
-        for _, row in recommendations.iterrows():
-            service_name, url = row["Service"], row["URL"]
-            st.markdown(f"[{service_name}]({url})")
+        st.write(recommendations)
     else:
         st.write("No services found for the given criteria.")
