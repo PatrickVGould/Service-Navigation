@@ -179,7 +179,8 @@ if st.button("Get Recommendations"):
 
     if not recommendations.empty:
         st.write("Recommended services:")
-        st.dataframe(recommendations)
-        # or st.table(recommendations)
+        st.table(recommendations.iloc[:, 1:])  # display all columns except the first one
+        # or st.dataframe(recommendations.iloc[:, 1:])
     else:
         st.write("No services found for the given criteria.")
+
