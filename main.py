@@ -5,7 +5,7 @@ import re
 # Sample service data
 data = {
     "Service": [
-        "Service A",
+        "Mission Australia",
         "Service B",
         "Service C",
         "Service D",
@@ -19,7 +19,7 @@ data = {
         "NGO",
     ],
     "Eligibility Criteria": [
-        "18+ years, anxiety",
+        "16+ years, Eastern Suburbs Mental Health, St George Mental Health, Sutherland Mental Health, anxiety, depression, eating disorders, substance abuse, mood disorder, schizophrenia",
         "Depression, 16+ years",
         "Physical disability, mental health support",
         "Eating disorders, 16+ years",
@@ -45,8 +45,14 @@ st.subheader("Patient Information")
 age = st.number_input("Age", min_value=1, max_value=120, value=25, step=1)
 condition = st.selectbox(
     "Condition",
-    options=["anxiety", "depression", "physical disability", "eating disorders", "substance abuse"],
+    options=["anxiety", "depression", "schizophenia", "mood disorder", "physical disability", "eating disorders", "substance abuse"],)
+catchment_area = st.selectbox(
+    "Catchment Area",
+    options=["Eastern Suburbs Mental Health", "St George Mental Health", "Sutherland Mental Health"],
 )
+current_support = st.selectbox(
+    "Current Support",
+    options = ["Mental Health Service", "GP", "Psychiatrist (Private or Public)", "Psychologist", "Other"],
 
 if st.button("Get Recommendations"):
     recommendations = get_recommendations(age, condition)
