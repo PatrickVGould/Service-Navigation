@@ -130,11 +130,10 @@ def get_recommendations(age, condition, catchment_area, current_support):
     ]
     eligible_services = eligible_services[
         eligible_services["Eligibility Criteria"].apply(
-            lambda x: int(re.search(r"\d+", x).group()) <= age
+            lambda x: int(re.search(r"\d+", x).group()) <= age if re.search(r"\d+", x) else False
         )
     ]
     return eligible_services
-
 
 #Streamlit app
 st.title("Mental Health Service Eligibility and Recommendation Program")
