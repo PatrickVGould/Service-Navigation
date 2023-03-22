@@ -25,7 +25,6 @@ data = {
         "Fake Service 17",
         "Fake Service 18",
         "Fake Service 19",
-        "Fake Service 20",
     ],
     "Type": [
         "NGO",
