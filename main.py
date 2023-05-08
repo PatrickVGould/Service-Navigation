@@ -126,7 +126,7 @@ def get_recommendations(age, condition, catchment_area, current_support):
     eligible_services = df[
         (df["Eligibility Criteria"].str.contains(condition, case=False)) &
         (df["Catchment Area"].str.contains(catchment_area, case=False)) &
-        (df["Current Support"].str.contains(current_support, case=False))
+        (df["Current Support"].str.contains(re.escape(current_support), case=False))
     ]
     eligible_services = eligible_services[
         eligible_services["Eligibility Criteria"].apply(
@@ -170,12 +170,14 @@ current_support_options = [
 selected_current_support = [option for option in current_support_options if st.checkbox(option, key='cs_'+option)]
 
 if st.button("Get Recommendations"):
-    recommendations = pd.DataFrame()
+    recommendations_list = []
     for condition in selected_conditions:
         for current_support in selected_current_support:
             temp = get_recommendations(age, condition, catchment_area, current_support)
             if not temp.empty:
-                recommendations = recommendations.append(temp)
+                recommendations_list.append(temp)
+
+    recommendations = pd.concat(recommendations_list).drop_duplicates().reset_index(drop=True)
 
     if not recommendations.empty:
         st.write("Recommended services:")
