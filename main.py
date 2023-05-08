@@ -167,7 +167,7 @@ current_support_options = [
     "Psychologist",
     "Other",
 ]
-selected_current_support = [option for option in current_support_options if st.checkbox(option, key=option)]
+selected_current_support = [option for option in current_support_options if st.checkbox(option, key='cs_'+option)]
 
 if st.button("Get Recommendations"):
     recommendations = pd.DataFrame()
