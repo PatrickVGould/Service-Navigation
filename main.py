@@ -133,7 +133,7 @@ def get_recommendations(age, condition, catchment_area, current_support):
             lambda x: int(re.search(r"\d+", x).group()) <= age if re.search(r"\d+", x) else False
         )
     ]
-    return eligible_services
+    return eligible_services if not eligible_services.empty else pd.DataFrame()
 
 #Streamlit app
 st.title("Mental Health Service Eligibility and Recommendation Program")
@@ -174,8 +174,8 @@ if st.button("Get Recommendations"):
     for condition in selected_conditions:
         for current_support in selected_current_support:
             temp = get_recommendations(age, condition, catchment_area, current_support)
-            recommendations = recommendations.append(temp)
-    recommendations = recommendations.drop_duplicates().reset_index(drop=True)
+            if not temp.empty:
+                recommendations = recommendations.append(temp)
 
     if not recommendations.empty:
         st.write("Recommended services:")
