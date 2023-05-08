@@ -136,6 +136,8 @@ def get_recommendations(age, condition, catchment_area, current_support):
     return eligible_services if not eligible_services.empty else pd.DataFrame()
 
 #Streamlit app
+st.set_page_config(page_title='MH Service Eligibility')
+
 st.title("Mental Health Service Eligibility and Recommendation Program")
 
 st.subheader("Patient Information")
